@@ -1,0 +1,221 @@
+<!-- forex/templates/forex/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nigerian Financial Cards - Exchange Rates and Supported Services</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f5f7fa; 
+            color: #333; 
+            margin: 0; 
+            padding: 0; 
+        }
+        /* Header and Navbar Styling */
+        header {
+            background-color: #4a90e2; /* Soft blue background */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000; /* Ensure the header stays on top */
+        }
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .hamburger {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px;
+        }
+        .mobile-nav {
+            display: none; /* Mobile menu hidden by default */
+            flex-direction: column;
+            gap: 10px;
+            background-color: #4a90e2;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .show { 
+            display: flex; /* Show the mobile menu when triggered */
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd45f'); /* Hero image */
+            background-size: cover; /* Cover the entire section */
+            background-position: center; /* Center the image */
+            height: 400px; /* Height of the hero section */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .hero h1 {
+            font-size: 3em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better visibility */
+        }
+        .hero p {
+            font-size: 1.5em;
+            margin-top: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto; /* Adjusted margin to add space around the content */
+        }
+        .card-info { 
+            border: 1px solid #e1e4e8; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            background-color: #ffffff; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-info:hover {
+            transform: translateY(-10px); 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .supported-services { 
+            margin-top: 15px; 
+        }
+        .service { 
+            background-color: #e8f0fe; 
+            color: #2c3e50; 
+            margin: 5px 0; 
+            padding: 8px; 
+            border-radius: 5px; 
+            font-size: 14px;
+            display: inline-block; 
+        }
+        /* Footer Styling */
+        footer {
+            background-color: #4a90e2; /* Soft blue background */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px; /* Space above footer */
+        }
+        footer p {
+            margin: 0;
+        }
+        footer a {
+            color: #fff; /* White links */
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            nav { 
+                display: none; /* Hide the desktop nav on small screens */
+            }
+            .hamburger {
+                display: flex; /* Show hamburger icon */
+            }
+            .cards-container {
+                grid-template-columns: 1fr; /* Stack cards on smaller screens */
+            }
+        }
+    </style>
+    <script>
+        // JavaScript to toggle the mobile menu
+        function toggleMenu() {
+            var mobileNav = document.getElementById('mobile-nav');
+            mobileNav.classList.toggle('show');
+        }
+    </script>
+</head>
+<body>
+    <!-- Header Section with Navbar -->
+    <header>
+        <div class="logo">Nigerian Financial Cards</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Cards</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </nav>
+        <!-- Hamburger Menu for Mobile -->
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-nav" class="mobile-nav">
+            <a href="#">Home</a>
+            <a href="#">Cards</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div>
+            <h1>Stay Updated with Real-Time Exchange Rates</h1>
+            <p>Discover the best rates for Nigerian debit cards and their supported services.</p>
+        </div>
+    </div>
+
+    <!-- Cards Section -->
+    <div class="cards-container">
+        {% for card in cards_info %}
+        <div class="card-info">
+            <h2>{{ card.card_name }} Debit Card</h2>
+            <p><strong>Current Exchange Rate:</strong> {{ card.exchange_rate }}</p>
+            <h3>Supported Services:</h3>
+            <div class="supported-services">
+                {% for service in card.supported_services %}
+                    <div class="service">{{ service }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Nigerian Financial Cards. All Rights Reserved.</p>
+        <p>
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a> |
+            <a href="#">Contact Us</a>
+        </p>
+    </footer>
+</body>
+</html>
