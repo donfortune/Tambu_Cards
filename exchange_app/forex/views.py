@@ -1,5 +1,9 @@
 # forex/views.py
 from django.shortcuts import render
+from .models import Card
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import CardSerializer
 
 def get_cards_info():
     # Mock data for GreyFinance debit card exchange rate and supported services
@@ -58,4 +62,11 @@ def home(request):
         'cards_info': cards_info
     }
     return render(request, 'home.html', context)
+
+@api_view(['GET'])
+def get_cards(request):
+    spec_card = Card.objects.all()
+    serializer = CardSerializer(spec_card, many=True)
+    return Response(serializer.data)
+
 
