@@ -4,6 +4,7 @@ from .models import Card
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import CardSerializer
+from rest_framework import status
 
 def get_cards_info():
     # Mock data for GreyFinance debit card exchange rate and supported services
@@ -68,5 +69,14 @@ def get_cards(request):
     spec_card = Card.objects.all()
     serializer = CardSerializer(spec_card, many=True)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def create_cards(request):
+    data = request.data
+    serializer = CardSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
