@@ -11,7 +11,9 @@ class ServiceSerializer(serializers.ModelSerializer):
 
 
 class CardSerializer(serializers.ModelSerializer):
-    services = ServiceSerializer(many=True)
+    services = serializers.PrimaryKeyRelatedField(queryset=models.Service.objects.all(), many=True)
+    
     class Meta:
         model = models.Card
         fields = '__all__'
+
