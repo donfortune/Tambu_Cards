@@ -67,7 +67,7 @@ def home(request):
 def services(request):
     services = Service.objects.all()
     context = {
-        'services': services,
+        'services': services
     }
     return render(request, 'services.html', context)
 
