@@ -1,5 +1,6 @@
 from django.db import models
 
+
 SERVICE_CHOICES = [
     ('udemy', 'Udemy'),
     ('apple_music', 'Apple Music'),
@@ -23,10 +24,18 @@ class Service(models.Model):
 
 
 class Card(models.Model):
+    STATUS_CHOICES = (
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+    )
+
     card_name = models.CharField(max_length=100)
-    exchange_rate = models.CharField(max_length=100)
+    exchange_rate = models.FloatField()
     services = models.ManyToManyField(Service)
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     
 
     def __str__(self):
-        return self.card_name
+        return f"{self.card_name} - {self.get_status_display()}"
+
+

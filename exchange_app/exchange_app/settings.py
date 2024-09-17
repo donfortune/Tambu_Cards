@@ -82,6 +82,12 @@ DATABASES = {
     }
 }
 
+STATIC_URL = '/static/'
+
+# Add this if you're serving static files from your app's root static directory
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
