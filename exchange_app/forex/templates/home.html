@@ -215,43 +215,126 @@
             color: #666;
         }
 
-        /* Services Section Styling */
-        .services-grid {
-            display: flex;
-            justify-content: space-around;
-            padding: 40px 0;
-        }
-
-        .service-card {
-            background-color: white;
-            padding: 20px;
-            width: 200px;
+        /* Available Offers Section */
+        .offers-container {
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 50px;
+            background-color: #fff;
+            color: #333;
+            border-radius: 15px;
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
         }
 
-        .service-card i {
-            font-size: 30px;
+        .offers-container h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+
+        .offers-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .offer-card {
+            background-color: #f9f9f9;
+            color: #333;
+            border-radius: 15px;
+            width: 250px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .offer-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .offer-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .offer-details {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .offer-details h3 {
+            margin: 15px 0;
+            font-size: 1.4em;
+        }
+
+        .offer-details p {
             margin-bottom: 10px;
-            color: #ff7e1b;
-        }
-
-        .service-card h3 {
-            margin-bottom: 10px;
-        }
-
-        .service-card p {
             color: #666;
         }
 
+        .timer {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .offer-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #ff7e1b;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .offer-button:hover {
+            background-color: #ff3d77;
+        }
+
+
 
     </style>
+    
     <script>
+
+        
         // JavaScript to toggle the mobile menu
         function toggleMenu() {
             var mobileNav = document.getElementById('mobile-nav');
             mobileNav.classList.toggle('show');
         }
+
+       // Countdown function remains the same
+        function countdown(endDate, timerId) {
+            let timerInterval = setInterval(function () {
+                const now = new Date().getTime();
+                const timeLeft = endDate - now;
+
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.getElementById(timerId).innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById(timerId).innerHTML = "Expired";
+                }
+            }, 1000);
+        }
+
+        // Initiating countdowns for each offer
+        const offerExpiryDates = {{ offers|safe }};  // You will need to pass expiry dates via context
+
+        offerExpiryDates.forEach((offer, index) => {
+            const expiryDate = new Date(offer.expiry_date).getTime();
+            const timerId = `offer-timer-${index + 1}`;
+            countdown(expiryDate, timerId);
+        });
+
     </script>
 </head>
 <body>
@@ -327,19 +410,44 @@
         {% endfor %}
     </div>
 
-    <!-- services section -->
-    <div class="services-grid">
-        <div class="service-card">
-            <i class="fas fa-spotify"></i>
-            <h3>Spotify</h3>
-            <p>Affordable Spotify subscriptions via card exchange.</p>
-        </div>
-        <div class="service-card">
-            <i class="fas fa-netflix"></i>
-            <h3>Netflix</h3>
-            <p>Get Netflix at discounted rates with our exchange offers.</p>
+    <div class="offers-container">
+        <h2>Available Offers</h2>
+        <div class="offers-grid">
+            {% for offer in offers %}
+            <div class="offer-card">
+                <div class="offer-image">
+                    <img src="{{ offer.image_url }}" alt="{{ offer.name }} Offer">
+                </div>
+                <div class="offer-details">
+                    <h3>{{ offer.name }}</h3>
+                    <p>{{ offer.description }}</p>
+                    <p><strong>Expiry Date:</strong> {{ offer.expiry_date }}</p>
+                    <p><strong>Time left:</strong> <span id="offer-timer-{{ forloop.counter }}"></span></p>
+                    <a href="{{ offer.claim_url }}" class="offer-button">Claim Offer</a>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
+
+    
+    <!-- <h1>Offers</h1>
+    <ul>
+        {% for offer in offers %}
+            <li>
+                <h2>{{ offer.name }}</h2>
+                <p>{{ offer.description }}</p>
+                <p>Discount: {{ offer.discount }}%</p>
+                <img src="{{ offer.image_url }}" alt="{{ offer.name }}">
+                <p>Expires on: {{ offer.expiry_date }}</p>
+                <a href="{{ offer.claim_url }}">Claim Offer</a>
+            </li>
+        {% empty %}
+            <p>No offers available.</p>
+        {% endfor %}
+    </ul> -->
+
+    
     
 
     <!-- Footer Section -->

@@ -37,5 +37,17 @@ class Card(models.Model):
 
     def __str__(self):
         return f"{self.card_name} - {self.get_status_display()}"
+    
+class Offers(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    discount = models.DecimalField(max_digits=5, decimal_places=2)  # For percentage discounts
+    image_url = models.URLField()  # URL to the image
+    expiry_date = models.DateTimeField()  # When the offer expires
+    claim_url = models.URLField()  # URL to claim the offer
+
+    def __str__(self):
+        return self.name
+
 
 

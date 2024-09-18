@@ -17,3 +17,10 @@ class CardSerializer(serializers.ModelSerializer):
         model = models.Card
         fields = '__all__'
 
+class OffersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Offers
+        fields = '__all__'
+
+        
+
