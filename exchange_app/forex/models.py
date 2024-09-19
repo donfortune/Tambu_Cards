@@ -18,6 +18,7 @@ SERVICE_CHOICES = [
 # Create your models here.
 class Service(models.Model):
     name = models.CharField(max_length=100, unique=True)
+    url = url = models.URLField(default="https://google.com") 
 
     def __str__(self):
         return self.name

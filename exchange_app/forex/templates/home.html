@@ -125,27 +125,38 @@
         }
 
         .card-status.active {
-            background-color: #28a745; /* Green for active */
+            background-color: #28a745; 
         }
 
         .card-status.inactive {
-            background-color: #dc3545; /* Red for inactive */
+            background-color: #dc3545; 
         }
+       
+
         .supported-services { 
             margin-top: 15px; 
+            display: flex;            
+            flex-wrap: wrap;          
+            gap: 10px;                
         }
+
         .service { 
             background-color: #e8f0fe; 
             color: #2c3e50; 
-            margin: 5px 0; 
-            padding: 8px; 
+            padding: 8px 12px;        
             border-radius: 5px; 
             font-size: 14px;
-            display: inline-block; 
+            text-decoration: none;     
+            white-space: nowrap;       
         }
+
+        .service:hover {
+            background-color: #c5d8f7;  
+        }
+
         /* Footer Styling */
         footer {
-            background-color: #4a90e2; /* Soft blue background */
+            background-color: #4a90e2; 
             color: white;
             padding: 20px 0;
             text-align: center;
@@ -403,7 +414,9 @@
             <h3>Supported Services:</h3>
             <div class="supported-services">
                 {% for service in card.services.all %}
-                    <div class="service">{{ service.name }}</div>
+                    <a href="{{ service.url }}" target="_blank" class="service">{{ service.name }}</a><br>
+                    <!-- <a href="{{ service.url }}" target="_blank">{{ service.name }}</a><br> -->
+                    <!-- <div class="service">{{ service.name }}</div> -->
                 {% endfor %}
             </div>
         </div>
