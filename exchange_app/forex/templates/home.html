@@ -410,7 +410,7 @@
         <div class="card-info">
             <h2>{{ card.card_name }}</h2>
             <div class="card-status {{ card.status }}">{{ card.status|capfirst }}</div>
-            <p><strong>Current Exchange Rate:</strong> {{ card.exchange_rate }}</p>
+            <p><strong>Current Exchange Rate:</strong> ₦{{ card.exchange_rate }}</p>
             <h3>Supported Services:</h3>
             <div class="supported-services">
                 {% for service in card.services.all %}
