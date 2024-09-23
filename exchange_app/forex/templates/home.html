@@ -351,11 +351,12 @@
 <body>
     <!-- Header Section with Navbar -->
     <header>
-        <div class="logo">Nigerian Financial Cards</div>
+        <!-- <div class="logo">Nigerian Financial Cards</div> -->
+        <div class="logo"><i class="fas fa-credit-card"></i> Tambu Rates</div>
         <nav>
-            <a href="#">Home</a>
-            <a href="#">Cards</a>
-            <a href="#">Services</a>
+            <a href="#home">Home</a>
+            <a href="#cards">Cards</a>
+            <a href="#offers">Offers</a>
             <a href="#">Contact</a>
         </nav>
         <!-- Hamburger Menu for Mobile -->
@@ -366,15 +367,15 @@
         </div>
         <!-- Mobile Navigation Menu -->
         <div id="mobile-nav" class="mobile-nav">
-            <a href="#">Home</a>
-            <a href="#">Cards</a>
-            <a href="#">Services</a>
+            <a href="#home">Home</a>
+            <a href="#cards">Cards</a>
+            <a href="#offers">Offers</a>
             <a href="#">Contact</a>
         </div>
     </header>
 
     <!-- Improved Hero Section -->
-    <div class="hero">
+    <div class="hero" id="home">
         <div>
             <h1>Real-Time Exchange Rates for Nigerian Debit Cards</h1>
             <p>Explore the latest rates and find services like Apple Music, Coursera, and Spotify supported by your card.</p>
@@ -383,7 +384,7 @@
     </div>
 
     <!-- Updated Feature Section -->
-    <div class="featured-block">
+    <div class="featured-block" id="features">
         <div class="container">
             <div class="feature-item">
                 <i class="fas fa-credit-card"></i> <!-- Icon representing cards -->
@@ -406,7 +407,7 @@
     
 
     <!-- Cards Section -->
-    <div class="cards-container">
+    <div class="cards-container" id="cards">
         {% for card in cards_info %}
         <div class="card-info">
             <h2>{{ card.card_name }}</h2>
@@ -424,7 +425,7 @@
         {% endfor %}
     </div>
 
-    <div class="offers-container">
+    <div class="offers-container" id="offers">
         <h2>Available Offers</h2>
         <div class="offers-grid">
             {% for offer in offers %}
