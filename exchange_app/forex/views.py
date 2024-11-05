@@ -81,3 +81,6 @@ def get_offers(request):
     offers = Offers.objects.all()
     serializer = OffersSerializer(offers, many=True)
     return Response(serializer.data)
+
+
+// add functionality to compare cards and rates
